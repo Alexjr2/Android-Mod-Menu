@@ -92,6 +92,7 @@ public class Menu {
     int SeekBarProgressColor = Color.parseColor("#80CBC4");
     int CheckBoxColor = Color.parseColor("#80CBC4");
     int RadioColor = Color.parseColor("#FFFFFF");
+    int CollapColor = Color.parseColor("#232F2C");
     String NumberTxtColor = "#41c300";
     //********************************************************************//
 
@@ -969,7 +970,7 @@ public class Menu {
         mCollapse = collapseSub;
 
         final TextView textView = new TextView(getContext);
-        textView.setBackgroundColor(CategoryBG);
+        textView.setBackgroundColor(CollapColor);
         textView.setText("▽ " + text + " ▽");
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(TEXT_COLOR_2);
