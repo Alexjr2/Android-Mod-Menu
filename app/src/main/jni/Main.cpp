@@ -159,6 +159,8 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
             OBFUSCATE("CheckBox_The Check Box"),
             OBFUSCATE("InputValue_Input number"),
             OBFUSCATE("InputValue_1000_Input number 2"), //Max value
+            OBFUSCATE("1111_InputLValue_Input long number"),
+            OBFUSCATE("InputLValue_1000000000000_Input long number 2"), //Max value
             OBFUSCATE("InputText_Input text"),
             OBFUSCATE("RadioButton_Radio buttons_OFF,Mod 1,Mod 2,Mod 3"),
 
@@ -199,12 +201,13 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
 }
 
 void Changes(JNIEnv *env, jclass clazz, jobject obj,
-                                        jint featNum, jstring featName, jint value,
-                                        jboolean boolean, jstring str) {
+                                        jint featNum, jstring featName, jint value, jlong Lvalue,
+                                        jboolean boolean, jstring text) {
 
-    LOGD(OBFUSCATE("Feature name: %d - %s | Value: = %d | Bool: = %d | Text: = %s"), featNum,
-         env->GetStringUTFChars(featName, 0), value,
-         boolean, str != NULL ? env->GetStringUTFChars(str, 0) : "");
+    const char *inputText = (text != NULL) ? env->GetStringUTFChars(text, 0) : "";
+    LOGD(OBFUSCATE("Feature name: %d - %s | Value: = %d | LongValue: = %lld | Bool: = %d | InputText: = %s"), featNum,
+         env->GetStringUTFChars(featName, 0), value, Lvalue,
+         boolean, inputText);
 
     //BE CAREFUL NOT TO ACCIDENTLY REMOVE break;
 
@@ -282,6 +285,11 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
             break;
         case 9:
             break;
+
+        case 1111:
+            int64_t Long = Lvalue;
+            Toast(env, obj, (std::string("Long value is : ") + std::to_string(Long)).c_str(), ToastLength::LENGTH_LONG);
+            break;
     }
 }
 
@@ -312,7 +320,7 @@ int RegisterMenu(JNIEnv *env) {
 
 int RegisterPreferences(JNIEnv *env) {
     JNINativeMethod methods[] = {
-            {OBFUSCATE("Changes"), OBFUSCATE("(Landroid/content/Context;ILjava/lang/String;IZLjava/lang/String;)V"), reinterpret_cast<void *>(Changes)},
+            {OBFUSCATE("Changes"), OBFUSCATE("(Landroid/content/Context;ILjava/lang/String;IJZLjava/lang/String;)V"), reinterpret_cast<void *>(Changes)},
     };
     jclass clazz = env->FindClass(OBFUSCATE("com/android/support/Preferences"));
     if (!clazz)
