@@ -121,7 +121,7 @@ void Init(JNIEnv *env, jobject thiz, jobject ctx, jobject title, jobject subtitl
     //setDialog(ctx,env,OBFUSCATE("Title"),OBFUSCATE("Message Example"));
 
     //Toast Example
-    Toast(env,ctx,OBFUSCATE("Modded by YOU"),ToastLength::LENGTH_LONG);
+    Toast(env,ctx,OBFUSCATE("Modded by RINDAMAN5555"),ToastLength::LENGTH_LONG);
 
     initValid = true;
 }
