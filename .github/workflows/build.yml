@@ -14,7 +14,7 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@main
       
-      - name: Setup java
+      - name: set up JDK 17
         uses: actions/setup-java@main
         with:
           distribution: 'temurin'
@@ -34,4 +34,5 @@ jobs:
         with:
           tag: ${{ github.event.inputs.TAG }}
           name: AndroidModMenuLGLV3
+          allowUpdates: true
           artifacts: app/build/outputs/apk/release/*.apk
