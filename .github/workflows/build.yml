@@ -1,0 +1,37 @@
+name: Build CI(release)
+
+on:
+ workflow_dispatch:
+  inputs:
+     TAG:
+      description: 'TAG Required'
+      required: true
+
+jobs:
+  build_CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@main
+      
+      - name: Setup java
+        uses: actions/setup-java@main
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@main
+        
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build With Gradle
+        run: ./gradlew assembleRelease --parallel
+
+      - name: Create Release
+        uses: ncipollo/release-action@main
+        with:
+          tag: ${{ github.event.inputs.TAG }}
+          name: AndroidModMenuLGLV3
+          artifacts: app/build/outputs/apk/release/*.apk
